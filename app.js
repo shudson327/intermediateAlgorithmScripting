@@ -66,3 +66,86 @@ function diff(arr1, arr2) {
 }
 
 console.log(diff([1, 2, 3, 5], [1, 2, 3, 4, 5]));
+
+
+// <--Arguments Optional-->
+
+function addTogether() {
+    // *Create an array that slices our arguments on each param*
+    var params = [].slice.call(arguments);
+    // *Check if EVERY PARAM PART is a number by iterating through with a function and if it isn't return undefined*
+    if(!params.every(function(param){
+      return typeof param === 'number';
+    })) {
+      return undefined;
+    }
+    // *If array has two values add them together*
+    if (params.length ===2){
+      return params[0] + params[1];
+      }
+      else {
+    // *Store the first paramater*
+    var firstParam = params[0];
+      }
+    // *Store a function that will take in the SECOND PARAMATER and using RECURSION call itself to add the values*
+    var addOneMore = function(secondParam){
+      return addTogether(firstParam, secondParam);
+      };
+    // *Returns the value of above*
+      return addOneMore;
+    }
+    
+    console.log(addTogether("http://bit.ly/IqT6zt"));
+    
+
+// <--Make a person-->
+
+var Person = function(firstAndLast) {
+    var array = firstAndLast.split(" ");
+    this.getFirstName = function(){
+      return array[0];
+    }; 
+  
+    this.getLastName = function(){
+      return array[1];
+    };
+    this.getFullName = function(){
+      return array[0] + " " + array[1];
+    };
+    this.setFirstName = function(first){
+      array[0] = first;
+    };
+    this.setLastName = function(last){
+      array[1] = last;
+    };
+    this.setFullName = function(firstAndLast){
+      var arraySplit = firstAndLast.split(" ");
+      this.setFirstName(arraySplit[0]);
+      this.setLastName(arraySplit[1]);
+    };
+  };
+  
+  var bob = new Person('Bob Ross');
+  bob.setFullName('Haskell Curry');
+  bob.getFullName()
+  
+  
+  console.log(bob.getFullName());
+
+
+// <--Map the Debris-->
+
+function orbitalPeriod(arr) {
+    var GM = 398600.4418;
+    var earthRadius = 6367.4447;
+    
+    var newArray = [];
+    for (var i = 0; i<arr.length; i++){
+      var results = 
+    Math.round(2*Math.PI*Math.sqrt(Math.pow(earthRadius + arr[i].avgAlt,3)/GM));
+      newArray.push({name:arr[i].name, orbitalPeriod: results});
+    }
+    return newArray;
+  }
+  
+  console.log(orbitalPeriod([{name : "sputnik", avgAlt : 35873.5553}]));
